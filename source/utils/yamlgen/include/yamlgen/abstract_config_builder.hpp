@@ -9,10 +9,8 @@
 
 namespace YAMLGen { 
 
-template <class TStrategy>
 class AbstractConfigBuilder
 { 
-	typedef typename TStrategy::Runner Runner; 
 
 public: 
 	virtual ~AbstractConfigBuilder() { } 
@@ -21,7 +19,7 @@ public:
 
 	virtual void parse(ConfigNode const & config) = 0;
 	virtual void parse_partial(ConfigNode const & config_node) = 0;
-	virtual void run(Runner & runner) = 0;
+	virtual void run(AbstractConfigRunner & runner) { } 
 };
 
 } /* namespace YAMLGen */

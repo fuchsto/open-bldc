@@ -1,7 +1,6 @@
 
 #include <olconf/flag_config_builder.hpp>
 #include <olconf/flag_config.hpp>
-#include <olconf/abstract_flag_config_runner.hpp>
 
 #include <yamlgen/config_node.hpp>
 #include <yamlgen/abstract_config_runner.hpp>
@@ -11,8 +10,9 @@
 namespace YAMLGen {
 namespace OBLDC { 
 
+template <class RunnerT>
 void
-FlagConfigBuilder::parse(ConfigNode const & config)
+FlagConfigBuilder<RunnerT>::parse(ConfigNode const & config)
 {
 	ConfigNode root;
 	ConfigNode::const_iterator root_it = config.find("config_root");
@@ -25,8 +25,9 @@ FlagConfigBuilder::parse(ConfigNode const & config)
 	parse_partial(root);
 }
 
+template <class RunnerT>
 void 
-FlagConfigBuilder::parse_partial(ConfigNode const & config_node)
+FlagConfigBuilder<RunnerT>::parse_partial(ConfigNode const & config_node)
 {
 	ConfigNode::const_iterator it_flags;
 	ConfigNode::const_iterator end_flags = config_node.end(); 
@@ -42,8 +43,9 @@ FlagConfigBuilder::parse_partial(ConfigNode const & config_node)
 	}
 }
 
+template <class RunnerT>
 void 
-FlagConfigBuilder::run(AbstractFlagConfigRunner & runner) 
+FlagConfigBuilder<RunnerT>::run(RunnerT & runner) 
 {
 	runner.run(this); 
 }

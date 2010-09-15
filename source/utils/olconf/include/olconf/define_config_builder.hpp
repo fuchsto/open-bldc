@@ -1,8 +1,6 @@
 #ifndef DEFINE_CONFIG_GENERATOR_STRATEGY_HPP__
 #define DEFINE_CONFIG_GENERATOR_STRATEGY_HPP__
 
-#include <olconf/define_config_strategy.hpp>
-
 #include <yamlgen/abstract_config_builder.hpp>
 
 #include <vector>
@@ -13,7 +11,8 @@
 namespace YAMLGen { 
 namespace OBLDC { 
 
-class DefineConfigBuilder : public AbstractConfigBuilder<DefineConfigStrategy>
+template <class RunnerT>
+class DefineConfigBuilder : public AbstractConfigBuilder
 {
 
 private: 
@@ -44,7 +43,7 @@ public:
 
 	virtual void parse(ConfigNode const & config);
 	virtual void parse_partial(ConfigNode const & config_node);
-	virtual void run(AbstractDefineConfigRunner & runner);
+	virtual void run(RunnerT & runner);
 
 };
 

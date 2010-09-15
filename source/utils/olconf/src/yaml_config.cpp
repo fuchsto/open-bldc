@@ -1,7 +1,10 @@
 
 #include <olconf/yaml_config.hpp>
-#include <olconf/module_config_strategy.hpp>
-#include <olconf/module_config_header_runner.hpp>
+#include <olconf/module_config_builder.impl.hpp>
+#include <olconf/register_config_builder.impl.hpp>
+#include <olconf/flag_config_builder.impl.hpp>
+#include <olconf/define_config_builder.impl.hpp>
+#include <olconf/header_generation_runner.hpp>
 
 #include <yamlgen/logging.hpp>
 #include <yamlgen/config_generator.hpp>
@@ -17,11 +20,17 @@ namespace OBLDC {
 void
 YAMLConfig::read(char const * filename) 
 {
-	m_interpreter.read(filename); 
+	Interpreter interpreter; 
+	interpreter.read(filename); 
+	
+	Postprocessor postproc(interpreter.config());
+	postproc.run(); 
 
-	ConfigGenerator<ModuleConfigStrategy> generator(m_interpreter); 
-	ModuleConfigHeaderRunner runner_strategy; 
-	generator.run(runner_strategy); 
+	ModuleConfigBuilder<HeaderGenerationRunner> builder;
+	builder.parse(postproc.config());
+
+	HeaderGenerationRunner runner; 
+	builder.run(runner);
 
 /* 
 	Note that a ConfigGenerator can parse several 

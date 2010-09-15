@@ -3,7 +3,6 @@
 
 #include <olconf/register_group_config.hpp>
 #include <olconf/flag_config.hpp>
-#include <olconf/flag_config_strategy.hpp>
 
 #include <yamlgen/abstract_config_builder.hpp>
 
@@ -13,7 +12,8 @@
 namespace YAMLGen { 
 namespace OBLDC { 
 
-class FlagConfigBuilder : public AbstractConfigBuilder<FlagConfigStrategy>
+template <class RunnerT>
+class FlagConfigBuilder : public AbstractConfigBuilder
 {
 
 private: 
@@ -35,7 +35,7 @@ public:
 
 	virtual void parse(ConfigNode const & config);
 	virtual void parse_partial(ConfigNode const & config_node);
-	virtual void run(AbstractFlagConfigRunner & runner);
+	virtual void run(RunnerT & runner);
 
 };
 

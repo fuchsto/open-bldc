@@ -1,6 +1,5 @@
 
 #include <olconf/define_config_builder.hpp>
-#include <olconf/abstract_define_config_runner.hpp>
 #include <yamlgen/config_node.hpp>
 #include <yamlgen/abstract_config_runner.hpp>
 #include <yamlgen/exception/builder_exception.hpp>
@@ -9,8 +8,9 @@
 namespace YAMLGen { 
 namespace OBLDC { 
 
+template <class RunnerT>
 void
-DefineConfigBuilder::parse(ConfigNode const & config)
+DefineConfigBuilder<RunnerT>::parse(ConfigNode const & config)
 {
 	ConfigNode root;
 	ConfigNode::const_iterator root_it = config.find("config_root");
@@ -23,8 +23,9 @@ DefineConfigBuilder::parse(ConfigNode const & config)
 	parse_partial(root);
 }
 
+template <class RunnerT>
 void 
-DefineConfigBuilder::parse_partial(ConfigNode const & config_node)
+DefineConfigBuilder<RunnerT>::parse_partial(ConfigNode const & config_node)
 {
 	::std::map< ::std::string, ::std::string>::const_iterator it_defines;
 	::std::map< ::std::string, ::std::string>::const_iterator end_defines;
@@ -38,8 +39,9 @@ DefineConfigBuilder::parse_partial(ConfigNode const & config_node)
 	}
 }
 
+template <class RunnerT>
 void 
-DefineConfigBuilder::run(AbstractDefineConfigRunner & runner) 
+DefineConfigBuilder<RunnerT>::run(RunnerT & runner) 
 {
 	runner.run(this); 
 }

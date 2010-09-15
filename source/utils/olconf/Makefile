@@ -16,10 +16,7 @@ endif
 BINOBJFILES = olconfgen.o yaml_config.o 
 
 # Objects needed for the shared library: 
-LIBOBJFILES = register_config_builder.o register_config_header_runner.o \
-							module_config_builder.o module_config_header_runner.o \
-							flag_config_builder.o flag_config_header_runner.o \
-							define_config_builder.o define_config_header_runner.o
+LIBOBJFILES = header_generation_runner.o \
 
 BINDIR=bin
 IDIR=include

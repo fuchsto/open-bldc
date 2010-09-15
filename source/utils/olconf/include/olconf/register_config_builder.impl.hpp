@@ -2,7 +2,6 @@
 #include <olconf/register_config_builder.hpp>
 #include <olconf/register_config.hpp>
 #include <olconf/register_group_config.hpp>
-#include <olconf/abstract_register_config_runner.hpp>
 
 #include <yamlgen/config_node.hpp>
 #include <yamlgen/abstract_config_runner.hpp>
@@ -12,8 +11,9 @@
 namespace YAMLGen { 
 namespace OBLDC { 
 
+template <class RunnerT>
 void
-RegisterConfigBuilder::parse(ConfigNode const & config)
+RegisterConfigBuilder<RunnerT>::parse(ConfigNode const & config)
 {
 	ConfigNode root;
 	ConfigNode::const_iterator root_it = config.find("config_root");
@@ -26,8 +26,9 @@ RegisterConfigBuilder::parse(ConfigNode const & config)
 	parse_partial(root);
 }
 
+template <class RunnerT>
 void
-RegisterConfigBuilder::parse_partial(ConfigNode const & config_node)
+RegisterConfigBuilder<RunnerT>::parse_partial(ConfigNode const & config_node)
 {
 	ConfigNode::const_iterator it_groups  = config_node.begin(); 
 	ConfigNode::const_iterator end_groups = config_node.end(); 
@@ -69,8 +70,9 @@ RegisterConfigBuilder::parse_partial(ConfigNode const & config_node)
 	}
 }
 
+template <class RunnerT>
 void 
-RegisterConfigBuilder::run(AbstractRegisterConfigRunner & runner) 
+RegisterConfigBuilder<RunnerT>::run(RunnerT & runner) 
 {
 	runner.run(this); 
 }
